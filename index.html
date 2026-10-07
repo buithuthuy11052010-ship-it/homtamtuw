@@ -115,7 +115,7 @@ footer{text-align:center;color:#777;font-size:12px;padding:0 20px 30px}
   <form id="thoughtForm">
 
     <label for="topic">Chủ đề</label>
-    <select id="topic" name="Chủ đề" required>
+    <select id="topic" name="topic" required>
       <option value="">-- Chọn chủ đề --</option>
       <option>Học tập & điểm số</option>
       <option>Gia đình</option>
@@ -126,13 +126,13 @@ footer{text-align:center;color:#777;font-size:12px;padding:0 20px 30px}
     </select>
 
     <label for="name">Tên / biệt danh <span style="font-weight:400;color:#999">(không bắt buộc)</span></label>
-    <input id="name" name="Tên hoặc biệt danh" type="text" maxlength="60" placeholder="Bạn muốn được gọi là...">
+    <input id="name" name="nickname" type="text" maxlength="60" placeholder="Bạn muốn được gọi là...">
 
     <label for="message">Điều bạn muốn chia sẻ</label>
-    <textarea id="message" name="Nội dung tâm tư" maxlength="5000" required placeholder="Hãy viết những điều bạn muốn chia sẻ..."></textarea>
+    <textarea id="message" name="message" maxlength="5000" required placeholder="Hãy viết những điều bạn muốn chia sẻ..."></textarea>
 
     <label class="check">
-      <input type="checkbox" id="anonymous" name="Gửi ẩn danh" checked>
+      <input type="checkbox" id="anonymous" name="anonymous" checked>
       Tôi muốn gửi ẩn danh
     </label>
 
