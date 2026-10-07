@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hòm Tâm Tư</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#f5f3ff,#eef7ff);
+  color:#263238;line-height:1.6;min-height:100vh
+}
+header{padding:25px 20px}
+.nav{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:21px;font-weight:800;color:#6658d9}
+.badge{background:#eeeaff;color:#5548c5;padding:7px 13px;border-radius:20px;font-size:13px}
+.hero{max-width:1050px;margin:25px auto 35px;padding:0 20px;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
+.hero h1{font-size:clamp(40px,6vw,64px);line-height:1.05;margin-bottom:18px}
+.hero h1 span{color:#6658d9}
+.hero p{color:#687180;font-size:17px;max-width:650px}
+.illustration{background:white;border:1px solid #e8e8f0;border-radius:30px;min-height:250px;display:flex;align-items:center;justify-content:center;font-size:100px;box-shadow:0 15px 40px #363b6010}
+main{max-width:1050px;margin:auto;padding:0 20px 50px}
+.grid{display:grid;grid-template-columns:1fr .75fr;gap:25px}
+.card{background:white;border:1px solid #e7e8f0;border-radius:24px;padding:28px;box-shadow:0 15px 40px #363b6010}
+h2{margin-bottom:6px}.intro{color:#707784;font-size:14px;margin-bottom:20px}
+label{display:block;font-weight:700;font-size:14px;margin:16px 0 8px}
+input,select,textarea{
+ width:100%;border:1px solid #dddfea;background:#fbfbfe;border-radius:12px;
+ padding:13px;font:inherit;color:#263238;outline:none
+}
+input:focus,select:focus,textarea:focus{border-color:#6658d9;box-shadow:0 0 0 3px #6658d91a}
+textarea{min-height:180px;resize:vertical}
+.check{display:flex;align-items:center;gap:8px;font-weight:400;color:#6b7280;font-size:13px}
+.check input{width:auto}
+button{
+ width:100%;border:0;border-radius:12px;padding:14px;background:#6658d9;color:white;
+ font-weight:700;font-size:15px;cursor:pointer;margin-top:20px
+}
+button:hover{background:#5346c2}
+.notice{margin-top:13px;padding:12px;background:#f7f6ff;border-radius:11px;color:#6b7280;font-size:12px}
+.side + .side{border-top:1px solid #eeeef4;margin-top:22px;padding-top:22px}
+.side h3{font-size:17px;margin-bottom:8px}.side p{color:#6b7280;font-size:14px}
+.steps{display:grid;gap:13px;margin-top:14px}
+.step{display:flex;gap:12px}.num{background:#eeeaff;color:#5b4ed0;width:31px;height:31px;border-radius:9px;display:grid;place-items:center;font-size:11px;font-weight:bold}
+.step strong{font-size:14px;display:block}.step small{color:#777;font-size:12px}
+.contact{margin-top:12px;padding:14px;border-radius:13px;background:#f7f6ff;font-size:13px}
+footer{text-align:center;color:#777;font-size:12px;padding:0 20px 30px}
+.modal{position:fixed;inset:0;background:#161a2a77;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal.show{display:flex}.modalbox{background:white;border-radius:22px;padding:30px;max-width:430px;text-align:center}
+.modalbox .icon{font-size:45px}.modalbox p{color:#6b7280;font-size:14px;margin-top:7px}
+.modalbox button{width:auto;padding:11px 22px}
+@media(max-width:800px){.hero,.grid{grid-template-columns:1fr}.illustration{min-height:180px}.badge{display:none}}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">☁ Hòm Tâm Tư</div>
+    <div class="badge">Một nơi để được lắng nghe</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>Bạn có điều muốn <span>chia sẻ?</span></h1>
+    <p>
+      Không phải mọi chuyện đều dễ nói thành lời. Hãy viết ra những điều
+      đang khiến bạn suy nghĩ, lo lắng hoặc cần được giúp đỡ.
+    </p>
+  </div>
+  <div class="illustration">💌</div>
+</section>
+
+<main>
+<div class="grid">
+
+<section class="card">
+  <h2>📮 Gửi tâm tư</h2>
+  <p class="intro">Bạn có thể gửi ẩn danh nếu cảm thấy thoải mái hơn.</p>
+
+  <!--
+  ============================================================
+  CẤU HÌNH EMAIL
+  ============================================================
+  Có 2 cách:
+
+  CÁCH 1 - DÙNG FORMSPREE:
+  1. Tạo form tại https://formspree.io/
+  2. Sau khi tạo, bạn sẽ có URL dạng:
+     https://formspree.io/f/xxxxxxxx
+  3. Dán URL đó vào FORM_ENDPOINT bên dưới.
+
+  Ví dụ:
+  const FORM_ENDPOINT = "https://formspree.io/f/abcdwxyz";
+
+  Email nhận sẽ được cấu hình trong tài khoản Formspree.
+
+  CÁCH 2 - DÙNG WEB3FORMS:
+  1. Tạo access key tại https://web3forms.com/
+  2. Dán key vào WEB3FORMS_ACCESS_KEY.
+  3. Điền email nhận vào RECEIVER_EMAIL.
+
+  LƯU Ý:
+  Không đặt mật khẩu email cá nhân vào file HTML.
+  ============================================================
+  -->
+
+  <form id="thoughtForm">
+
+    <label for="topic">Chủ đề</label>
+    <select id="topic" name="Chủ đề" required>
+      <option value="">-- Chọn chủ đề --</option>
+      <option>Học tập & điểm số</option>
+      <option>Gia đình</option>
+      <option>Bạn bè & các mối quan hệ</option>
+      <option>Áp lực & cảm xúc</option>
+      <option>Định hướng tương lai</option>
+      <option>Khác</option>
+    </select>
+
+    <label for="name">Tên / biệt danh <span style="font-weight:400;color:#999">(không bắt buộc)</span></label>
+    <input id="name" name="Tên hoặc biệt danh" type="text" maxlength="60" placeholder="Bạn muốn được gọi là...">
+
+    <label for="message">Điều bạn muốn chia sẻ</label>
+    <textarea id="message" name="Nội dung tâm tư" maxlength="5000" required placeholder="Hãy viết những điều bạn muốn chia sẻ..."></textarea>
+
+    <label class="check">
+      <input type="checkbox" id="anonymous" name="Gửi ẩn danh" checked>
+      Tôi muốn gửi ẩn danh
+    </label>
+
+    <button type="submit" id="submitBtn">Gửi tâm tư 💌</button>
+
+    <div class="notice">
+      🔒 Nội dung tâm tư chỉ nên được gửi đến hệ thống tiếp nhận chính thức
+      của nhà trường. Không nhập mật khẩu hoặc thông tin tài khoản cá nhân.
+    </div>
+  </form>
+</section>
+
+<aside class="card">
+
+  <div class="side">
+    <h3>🌱 Bạn có thể chia sẻ gì?</h3>
+    <p>
+      Áp lực học tập, điểm số, gia đình, bạn bè, các mối quan hệ,
+      định hướng tương lai hoặc bất kỳ điều gì bạn cảm thấy cần được lắng nghe.
+    </p>
+  </div>
+
+  <div class="side">
+    <h3>💜 Sau khi gửi</h3>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><div><strong>Viết điều bạn muốn nói</strong><small>Không cần diễn đạt hoàn hảo.</small></div></div>
+      <div class="step"><div class="num">02</div><div><strong>Gửi tâm tư</strong><small>Có thể chọn gửi ẩn danh.</small></div></div>
+      <div class="step"><div class="num">03</div><div><strong>Nhận hỗ trợ</strong><small>Người phụ trách có thể tiếp nhận và hỗ trợ phù hợp.</small></div></div>
+    </div>
+  </div>
+
+  <div class="side">
+    <h3>🧑‍🏫 Phòng tham vấn</h3>
+    <p>Nếu vấn đề ảnh hưởng nhiều đến cuộc sống hoặc việc học, bạn có thể tìm đến phòng tham vấn của trường.</p>
+    <div class="contact">
+      📧 <strong>Email:</strong> thay-email-cua-truong@example.com<br>
+      📍 <strong>Địa điểm:</strong> Phòng tham vấn tâm lý
+    </div>
+  </div>
+
+</aside>
+</div>
+</main>
+
+<footer>Hòm Tâm Tư • Một không gian để chia sẻ và tìm kiếm sự hỗ trợ</footer>
+
+<div class="modal" id="modal">
+  <div class="modalbox">
+    <div class="icon">💌</div>
+    <h2 id="modalTitle">Đã gửi tâm tư</h2>
+    <p id="modalText">Cảm ơn bạn đã chia sẻ. Nội dung đã được chuyển đến hệ thống tiếp nhận.</p>
+    <button onclick="closeModal()">Đóng</button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   🔧 CHỈNH 3 DÒNG NÀY ĐỂ KẾT NỐI EMAIL
+   ============================================================ */
+
+// CÁCH 1: Formspree
+const FORM_ENDPOINT = "DÁN_URL_FORMSPREE_VÀO_ĐÂY";
+
+// CÁCH 2: Web3Forms
+const WEB3FORMS_ACCESS_KEY = "DÁN_ACCESS_KEY_VÀO_ĐÂY";
+const RECEIVER_EMAIL = "DÁN_EMAIL_PHÒNG_THAM_VẤN_VÀO_ĐÂY";
+
+/* ============================================================
+   KHÔNG CẦN SỬA PHẦN BÊN DƯỚI
+   ============================================================ */
+
+const form = document.getElementById("thoughtForm");
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const modalText = document.getElementById("modalText");
+const submitBtn = document.getElementById("submitBtn");
+const anonymous = document.getElementById("anonymous");
+const nameInput = document.getElementById("name");
+
+anonymous.addEventListener("change", () => {
+  if (anonymous.checked) {
+    nameInput.value = "";
+    nameInput.disabled = true;
+    nameInput.placeholder = "Bạn đang gửi ẩn danh";
+  } else {
+    nameInput.disabled = false;
+    nameInput.placeholder = "Bạn muốn được gọi là...";
+  }
+});
+anonymous.dispatchEvent(new Event("change"));
+
+function showModal(title, text) {
+  modalTitle.textContent = title;
+  modalText.textContent = text;
+  modal.classList.add("show");
+}
+
+function closeModal() {
+  modal.classList.remove("show");
+}
+
+modal.addEventListener("click", e => {
+  if (e.target === modal) closeModal();
+});
+
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+
+  if (!form.reportValidity()) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Đang gửi...";
+
+  const formData = new FormData(form);
+
+  try {
+
+    // ================= FORMspree =================
+    if (FORM_ENDPOINT && !FORM_ENDPOINT.includes("DÁN_URL")) {
+
+      const response = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        body: formData,
+        headers: { "Accept": "application/json" }
+      });
+
+      if (!response.ok) throw new Error("Formspree error");
+
+      showModal(
+        "Đã gửi thành công 💌",
+        "Cảm ơn bạn đã chia sẻ. Tâm tư của bạn đã được chuyển đến email tiếp nhận."
+      );
+      form.reset();
+      anonymous.checked = true;
+      anonymous.dispatchEvent(new Event("change"));
+
+    // ================= WEB3FORMS =================
+    } else if (
+      WEB3FORMS_ACCESS_KEY &&
+      !WEB3FORMS_ACCESS_KEY.includes("DÁN_ACCESS") &&
+      RECEIVER_EMAIL &&
+      !RECEIVER_EMAIL.includes("DÁN_EMAIL")
+    ) {
+
+      formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+      formData.append("to", RECEIVER_EMAIL);
+      formData.append("subject", "📮 Hòm Tâm Tư - Có một chia sẻ mới");
+      formData.append("from_name", "Hòm Tâm Tư");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (!result.success) throw new Error("Web3Forms error");
+
+      showModal(
+        "Đã gửi thành công 💌",
+        "Cảm ơn bạn đã chia sẻ. Tâm tư của bạn đã được chuyển đến email tiếp nhận."
+      );
+      form.reset();
+      anonymous.checked = true;
+      anonymous.dispatchEvent(new Event("change"));
+
+    } else {
+
+      // Chưa cấu hình dịch vụ email
+      showModal(
+        "Website đã sẵn sàng",
+        "Bạn chưa kết nối dịch vụ email. Hãy mở phần cấu hình trong code và điền Formspree hoặc Web3Forms."
+      );
+    }
+
+  } catch (error) {
+
+    showModal(
+      "Không thể gửi 😥",
+      "Có lỗi khi kết nối với hệ thống email. Hãy kiểm tra lại cấu hình hoặc thử lại sau."
+    );
+
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Gửi tâm tư 💌";
+  }
+});
+</script>
+
+</body>
+</html>
